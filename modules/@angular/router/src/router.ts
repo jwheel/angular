@@ -453,7 +453,8 @@ export class Router {
 
       const storedState = this.currentRouterState;
       const storedUrl = this.currentUrlTree;
-
+      const storedRouter = this.Router;
+      
       applyRedirects(this.injector, this.configLoader, url, this.config)
           .mergeMap(u => {
             appliedUrl = u;
@@ -475,7 +476,7 @@ export class Router {
             state = newState;
             preActivation =
                 new PreActivation(state.snapshot, this.currentRouterState.snapshot, this.injector);
-            preActivation.traverse(this.outletMap);
+            preActivation.traverse(storedRouter);
           })
           .mergeMap(_ => {
             return preActivation.checkGuards();
